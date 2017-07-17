@@ -1,0 +1,61 @@
+<section>
+      VmInclude:__LIB__/vmiis/Common-Code/grid/grid.html
+</section>
+<script>
+    function F__ID(){
+        //-------------------------------------
+        VmInclude:__LIB__/vmiis/Common-Code/grid/grid.js
+        VmInclude:__LIB__/vmiis/Common-Code/style/ease-in-out.js
+        //-------------------------------------
+        _fields="_Form,Topic,Version,Short_Title,Details|Contents,Color";
+        _fields+=",Submit Date|DateTime,Submitted by|Author,_Delete";
+        //-------------------------------------
+		var ids=_sys.config.module_ids;
+		var topics_tid=_mlist[ids.topics].table_id;
+        //-------------------------------------
+        $('#D__ID').on('load',function(){  _set_req(); _request_data(); })
+        //-------------------------------------
+        _cell_render=function(records,I,field,td,set_value,source){
+            switch(field){
+                case 'Topic':
+                case 'Version':
+                    records[I].vm_readonly[field]=true;
+                    break;
+                case 'Color':
+                    VmInclude:__LIB__/vmiis/Common-Code/grid/field_color.js
+                    break;
+            }
+        }
+        //-------------------------------------
+        _before_submit=function(record,dbv){
+            var puid=record.PUID;
+            if(puid===null || puid===undefined) puid=_mobj.op.puid;
+            if(puid===null || puid===undefined){
+                alert("No parent");
+                return false;
+            }
+    	    dbv.PPID=topic_tid;
+    	    dbv.PUID=puid;
+            dbv.S1=record.Short_Title;
+            return true;
+        };
+        //-------------------------------------
+        _new_pre_data_process=function(){
+            var topic=_mobj.op.topic;
+            var version=_mobj.op.version;
+            _records[0].Topic=topic;
+            _records[0].Version=version;
+            _records[0].Color="#008800";
+        };
+        //-------------------------------------
+        _set_req=function(){
+            if(_mobj.op.sql_where===undefined) $('#new__ID').hide();
+            else $('#new__ID').show();
+            _set_req_with_sql_where();
+        }
+        //-------------------------------------
+    }
+</script>
+<style>
+    VmInclude:__LIB__/vmiis/Common-Code/grid/grid.css
+</style>

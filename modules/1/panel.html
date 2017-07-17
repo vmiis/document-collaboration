@@ -1,0 +1,85 @@
+<div>
+    <div id=toolbar__ID>
+        <a id=back__ID>Back</a><span class=tab__ID></span><span id=nav_link__ID></span>
+    </div>
+    <div id=panel__ID style='clear:left;'>
+        <div class='nav__ID'>
+            <span>Document Collaboration</span>
+            <ul>
+                <li data-name=topic>Topics</li>
+            </ul>
+            <br>
+            <!--
+            <span>Child Records</span>
+            <ul>
+                <li data-name=total_number>All different version of files</li>
+                <li data-name=total_number_compensation>All coments</li>
+            </ul>
+        -->
+        </div>
+    </div>
+</div>
+<script>
+    //---------------------------------------------
+    function F__ID(){
+        //---------------------------------------------
+        VmInclude:__BASE__/vmiis/Common-Code/navigation/navigation.js
+        VmInclude:__BASE__/vmiis/Common-Code/style/ease-in-out.js
+        //---------------------------------------------
+        var module_list=function(){
+            _app_id='dc_';
+            //---------------------------------------------
+            var L=$vm.module_list,A=_app_id;
+			var M='https://vmiis.github.io/modules';
+			//---------------------------------------------
+			if(window.location.hostname=='127.0.0.1' || window.location.hostname=='localhost'){
+				M=window.location.protocol+'//'+window.location.host+"/vmiis/task-module-examples";
+			}
+            //---------------------------------------------
+            var v={
+                topic_tid       :'20005052',
+                file_tid        :'20005053',
+                discussion_tid  :'20005054',
+                file            :A+'file',
+                discussion      :A+'discussion',
+            }
+            L[A+'topic']        ={table_id:v.topic_tid,         var:v,url:M+'/document_collaboration/topic.html'};
+            L[A+'file']         ={table_id:v.file_tid,          var:v,url:M+'/document_collaboration/file.html'};
+            L[A+'discussion']   ={table_id:v.discussion_tid,    var:v,url:M+'/document_collaboration/discussion.html'};
+            //---------------------------------------------
+        }
+        module_list();
+        //---------------------------------------------
+        _set_li_permissions();
+        //---------------------------------------------
+        $('#D__ID').on('load',function(){
+            _nav_name='';
+            _set_nav_link();
+        });
+        //---------------------------------------------
+    }
+</script>
+<style>
+    VmInclude:__BASE__/vmiis/Common-Code/navigation/navigation.css
+    #D__ID{
+        background: url("__BASE__/vmiis/common-code/image/texture.png");
+    }
+    .nav__ID span{
+        color:#005500;
+    }
+    .nh__ID{
+        color:#999!Important;
+        font-size:8pt;
+        font-weight: normal!Important;
+        margin:0!Important;
+    }
+    @media screen and (max-width:900px){
+        #D__ID{
+            font-size:16pt;
+        }
+        .nav__ID li{
+            padding-top:3px;
+            padding-bottom:3px;
+        }
+    }
+</style>

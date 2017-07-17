@@ -1,0 +1,126 @@
+<section>
+    <div id=toolbar__ID>
+        <a id=back__ID>Back</a>
+        <span class=tab__ID></span>Financial Year: <select id=YY__ID type=select></select>
+        <a id=aquery__ID >Query</a>
+        <a id=export__ID >Export</a>
+    	<span class=tab__ID></span>Aggregation Query
+        <span class=tab__ID></span>
+    </div>
+    <div id=table__ID>
+        <table id=grid__ID></table>
+    </div>
+</section>
+<script>
+function F__ID(){
+    //------------------------
+    VmInclude:__BASE__/vmiis/Common-Code/grid/grid.js
+    VmInclude:__BASE__/vmiis/Common-Code/style/ease-in-out.js
+    //------------------------
+    //number dropdown
+    var $List2=$('#YY__ID');
+    var y=new Date().getFullYear();
+    for(var i=0;i<7;i++){
+        $List2.append(  $('<option></option>').val(y-i).html(y-i)  );
+    }
+    $List2.val(y);
+    //---------------------------------------------
+    _fields="Item,Amount";
+    //-------------------------------------
+    $('#aquery__ID').on('click',function(){_set_req(); _request_data();})
+    //-------------------------------------
+    var data_process=function(data_records){
+        var results={}
+        for(var i=0;i<data_records.length;i++){
+            for(var item in data_records[i]){
+                if(item!='__month__'){
+                    var ns=item.split('_1_1_1_');
+                    var name=ns[0];
+                    var type=ns[1];
+                    var gst=ns[2];
+                    var tr=ns[3];
+                    var amount=parseFloat(data_records[i][item]);
+                    if(gst=='GST') amount=amount*10/11;
+                    if(type=='Income'){
+                        if(results[tr]==undefined){
+                            results[tr]=amount;
+                        }
+                        else{
+                            results[tr]+=amount
+                        }
+                    }
+                    if(type=='Expense' || type=='Super_Expense' || type=='Salary_Expense'){
+                        if(results[tr]==undefined){
+                            results[tr]=-amount;
+                        }
+                        else{
+                            results[tr]-=amount
+                        }
+                    }
+                }
+            }
+        }
+        var r=[];
+        for(var p in results){
+            var record={};
+            record.Item=p.replace(/_/g,' ');
+            record.Amount=results[p].toFixed(2);
+            r.push(record);
+        }
+
+
+        var record={}
+        record.Item='Total';
+        var a=0; for(var i=0;i<r.length;i++)  if(r[i].Amount!='') a+=parseFloat(r[i].Amount); record.Amount=a.toFixed(2);
+
+        r.sort(function(a,b) {
+            if (a.Item < b.Item)
+              return -1;
+            if (a.Item > b.Item)
+              return 1;
+            return 0;
+        })
+        r.push(record);
+
+        return r;
+    }
+    //-------------------------------------
+    _data_process=function(){
+        $vm.alert('Working hard...');
+        var r=_records;
+        _records=[];
+        setTimeout(function(){
+            _records=data_process(r);
+            _simple_render();
+            $vm.close_alert();
+        }, 100);
+    }
+    //-------------------------------------
+    _set_req=_set_req_export=function(){
+        var sql="select Information from [TABLE-"+_db_pid+"] where (V1=@I1 and V2>=1 and V2<=6) or (V1=@I1-1 and V2>=7 and V2<=12)";
+        _req={cmd:'query_records',sql:sql,i1:$('#YY__ID').val()}
+    }
+    //-------------------------------------
+    var _request_data_export=function(){
+        $VmAPI.request({data:_req,callback:function(res){
+            _records=data_process(res.records);
+            _export_data(_filename);
+        }})
+    }
+    //-------------------------------------
+}
+</script>
+<style>
+    VmInclude:__BASE__/vmiis/Common-Code/grid/grid.css
+    #grid__ID tr td:nth-child(3)
+    {
+        text-align: right;
+        width:70px;
+    }
+    #grid__ID tr:last-child td:not(:first-child){
+        font-weight: bold;
+    }
+    #grid__ID tr:nth-last-child(2) td:not(:first-child){
+        border-bottom: 2px solid black;
+    }
+</style>

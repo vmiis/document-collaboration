@@ -1,0 +1,89 @@
+<section>
+    <div id=toolbar__ID>
+        <a id=back__ID>Back</a>
+        <span class=tab__ID></span><select id=YY__ID type=select></select>
+        <a id=aquery__ID >Query</a>
+        <a id=export__ID >Export</a>
+    	<span class=tab__ID></span>Aggregation Query
+        <span class=tab__ID></span>
+    </div>
+    <div id=table__ID>
+        <table id=grid__ID></table>
+    </div>
+</section>
+<script>
+function F__ID(){
+    //------------------------
+    VmInclude:__BASE__/vmiis/Common-Code/grid/grid.js
+    VmInclude:__BASE__/vmiis/Common-Code/style/ease-in-out.js
+    VmInclude:__CURRENT_PATH__/aggregation.js
+    //------------------------
+    var create_results=function(data_records){
+        var results={}
+        for(var i=0;i<data_records.length;i++){
+            var month=data_records[i].__month__;
+            for(var item in data_records[i]){
+                if(item!='__month__'){
+                    var ns=item.split('_1_1_1_');
+                    var name=ns[0];
+                    var type=ns[1];
+                    var gst=ns[2];
+                    var tr=ns[3];
+                    var amount=parseFloat(data_records[i][item]);
+                    if(gst=='GST'){
+                        amount=amount*10/11;
+                    }
+                    if(type=="Income"){
+                        if(results[name]==undefined){
+                            results[name]={}
+                        }
+                        switch(month){
+                            case '1': if(results[name].M1==undefined) results[name].M1=amount; else results[name].M1+=amount;  break;
+                            case '2': if(results[name].M2==undefined) results[name].M2=amount; else results[name].M2+=amount;  break;
+                            case '3': if(results[name].M3==undefined) results[name].M3=amount; else results[name].M3+=amount;  break;
+                            case '4': if(results[name].M4==undefined) results[name].M4=amount; else results[name].M4+=amount;  break;
+                            case '5': if(results[name].M5==undefined) results[name].M5=amount; else results[name].M5+=amount;  break;
+                            case '6': if(results[name].M6==undefined) results[name].M6=amount; else results[name].M6+=amount;  break;
+                            case '7': if(results[name].M7==undefined) results[name].M7=amount; else results[name].M7+=amount;  break;
+                            case '8': if(results[name].M8==undefined) results[name].M8=amount; else results[name].M8+=amount;  break;
+                            case '9': if(results[name].M9==undefined) results[name].M9=amount; else results[name].M9+=amount;  break;
+                            case '10': if(results[name].M10==undefined) results[name].M10=amount; else results[name].M10+=amount;  break;
+                            case '11': if(results[name].M11==undefined) results[name].M11=amount; else results[name].M11+=amount;  break;
+                            case '12': if(results[name].M12==undefined) results[name].M12=amount; else results[name].M12+=amount;  break;
+                        }
+                    }
+                }
+            }
+        }
+        return results;
+    }
+    //------------------------
+}
+</script>
+<style>
+    VmInclude:__BASE__/vmiis/Common-Code/grid/grid.css
+    #grid__ID tr td:nth-child(3),
+    #grid__ID tr td:nth-child(4),
+    #grid__ID tr td:nth-child(5),
+    #grid__ID tr td:nth-child(5),
+    #grid__ID tr td:nth-child(6),
+    #grid__ID tr td:nth-child(7),
+    #grid__ID tr td:nth-child(8),
+    #grid__ID tr td:nth-child(9),
+    #grid__ID tr td:nth-child(10),
+    #grid__ID tr td:nth-child(11),
+    #grid__ID tr td:nth-child(12),
+    #grid__ID tr td:nth-child(13),
+    #grid__ID tr td:nth-child(14),
+    #grid__ID tr td:nth-child(15)
+    {
+        text-align: right;
+        width:70px;
+    }
+    #grid__ID tr:last-child td:not(:first-child){
+        font-weight: bold;
+    }
+    #grid__ID tr:nth-last-child(2) td:not(:first-child){
+        border-bottom: 2px solid black;
+    }
+</style>

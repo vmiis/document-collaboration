@@ -1,0 +1,72 @@
+<div>
+    <div id=toolbar__ID>
+        <a id=back__ID>Back</a><span class=tab__ID></span><span id=nav_link__ID></span>
+    </div>
+    <div id=panel__ID style='clear:left;'>
+        <div class='nav__ID'>
+            <span>Transaction tax details</span>
+            <ul>
+                <li data-name=bookkeeping_details_with_basic_toolbar>Transaction tax (with export function)</li>
+                <li data-name=bookkeeping_details_with_period_toolbar>Transaction tax (with period selection)</li>
+                <li data-name=bookkeeping_details_with_month_toolbar>Transaction tax (with year and month selection)</li>
+                <li data-name=bookkeeping_details_with_quarter_toolbar>Transaction tax (with year and quarter selection)</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script>
+    //---------------------------------------------
+    function F__ID(){
+        //---------------------------------------------
+        VmInclude:__BASE__/vmiis/Common-Code/navigation/navigation.js
+        VmInclude:__BASE__/vmiis/Common-Code/style/ease-in-out.js
+        //---------------------------------------------
+        var tax=function(){
+            _app_id='tax_';
+            //---------------------------------------------
+			var L=$vm.module_list,A=_app_id;
+			var M='https://vmiis.github.io/modules/income_and_expense_reporting';
+			if(window.location.hostname=='127.0.0.1' || window.location.hostname=='localhost'){
+				M=window.location.protocol+'//'+window.location.host+"/vmiis/modules/income_and_expense_reporting";
+			}
+            //---------------------------------------------
+            var v={
+                predefined_item_tid :'20005380',
+                record_tid          :'20007172',
+            }
+            L[A+'bookkeeping_details_with_basic_toolbar']   ={table_id:v.record_tid, var:v,  url:M+'/bookkeeping_details_with_basic_toolbar.html'};
+            L[A+'bookkeeping_details_with_period_toolbar']  ={table_id:v.record_tid, var:v,  url:M+'/bookkeeping_details_with_period_toolbar.html'};
+            L[A+'bookkeeping_details_with_month_toolbar']   ={table_id:v.record_tid, var:v,  url:M+'/bookkeeping_details_with_year_month_toolbar.html'};
+            L[A+'bookkeeping_details_with_quarter_toolbar'] ={table_id:v.record_tid, var:v,  url:M+'/bookkeeping_details_with_year_quarter_toolbar.html'};
+            //---------------------------------------------
+        }
+        tax();
+        //---------------------------------------------
+        _set_li_permissions();
+        //---------------------------------------------
+        $('#D__ID').on('load',function(){
+            _nav_name='';
+            _set_nav_link();
+        });
+        //---------------------------------------------
+    }
+</script>
+<style>
+    VmInclude:__BASE__/vmiis/Common-Code/navigation/navigation.css
+    #D__ID{
+        overflow: hidden;
+        background: url("__BASE__/vmiis/common-code/image/texture.png");
+    }
+    .nav__ID span,.nav__ID u{
+        color:#005500;
+        font-weight: bold;
+    }
+    ul{
+        padding-left:28px;
+    }
+    @media screen and (max-width:900px){
+        #D__ID{
+            font-size:16pt;
+        }
+    }
+</style>

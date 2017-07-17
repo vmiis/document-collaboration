@@ -1,0 +1,77 @@
+<div>
+    <div id=toolbar__ID>
+        <a id=back__ID>Back</a><span class=tab__ID></span><span id=nav_link__ID></span>
+    </div>
+    <div id=panel__ID style='clear:left;'>
+        <div class='nav__ID'>
+            <span>ATO tax reporting</span>
+            <ul>
+                <li data-name=gst_aggregation_query>GST Aggregation Query</li>
+                <!--<li data-name=pyag_aggregation_query data-check=1 data-mark='under development|font-size:9px;color:red'>PAYG Aggregation Query</li>-->
+                <li data-name=tax_retuen_item_aggregation_query>Tax Return Item Aggregation Query</li>
+            </ul>
+            <br>
+            <span>ATO Resource Links</span>
+            <ul class=b>
+                <li><a target=_blank href='https://www.ato.gov.au/WorkArea/DownloadAsset.aspx?id=10473'>GST calculation worksheet for BAS</a></li>
+                <li><a target=_blank href='https://www.ato.gov.au/uploadedFiles/Content/CAS/downloads/BUS25195Nat4190s.pdf'>Business activity statement</a></li>
+                <li><a target=_blank href='https://www.ato.gov.au/uploadedFiles/Content/MEI/downloads/BUS16191n3447.pdf'>PAYG payment summary statement</a></li>
+                <li><a target=_blank href='https://www.ato.gov.au/uploadedFiles/Content/MEI/downloads/Company-tax-return-2016.pdf'>Company Tax Return 2016</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script>
+    //---------------------------------------------
+    function F__ID(){
+        //---------------------------------------------
+        VmInclude:__BASE__/vmiis/Common-Code/navigation/navigation.js
+        VmInclude:__BASE__/vmiis/Common-Code/style/ease-in-out.js
+        //---------------------------------------------
+        var module_list=function(){
+            _app_id='ato_tax_';
+            //---------------------------------------------
+			var L=$vm.module_list,A=_app_id;
+			var M='https://vmiis.github.io/modules/income_and_expense_reporting';
+			if(window.location.hostname=='127.0.0.1' || window.location.hostname=='localhost'){
+				M=window.location.protocol+'//'+window.location.host+"/vmiis/modules/income_and_expense_reporting";
+			}
+            //---------------------------------------------
+            var v={
+                bi_tid :'20010377',
+            }
+            L[A+'gst_aggregation_query']                ={table_id:v.bi_tid, var:v,  url:M+'/aggregation_query_gst.html'};
+            L[A+'tax_retuen_item_aggregation_query']    ={table_id:v.bi_tid, var:v,  url:M+'/aggregation_query_tax_return.html'};
+            //---------------------------------------------
+        }
+        module_list();
+        //---------------------------------------------
+        _set_li_permissions();
+        _development_mark();
+        //---------------------------------------------
+        $('#D__ID').on('load',function(){
+            _nav_name='';
+            _set_nav_link();
+        });
+        //---------------------------------------------
+    }
+</script>
+<style>
+    VmInclude:__BASE__/vmiis/Common-Code/navigation/navigation.css
+    #D__ID{
+        overflow: hidden;
+        background: url("__BASE__/vmiis/common-code/image/texture.png");
+    }
+    .nav__ID span,.nav__ID u{
+        color:#005500;
+        font-weight: bold;
+    }
+    ul{
+        padding-left:28px;
+    }
+    @media screen and (max-width:900px){
+        #D__ID{
+            font-size:16pt;
+        }
+    }
+</style>

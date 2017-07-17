@@ -1,0 +1,88 @@
+<div>
+    <div id=toolbar__ID>
+        <a id=back__ID>Back</a><span class=tab__ID></span><span id=nav_link__ID></span>
+    </div>
+    <div id=panel__ID style='clear:left;'>
+        <div class='nav__ID'>
+            <span>Transaction Bookkeeping</span>
+            <ul>
+                <li data-name=income_and_expense_with_basic_toolbar>Bookkeeping (with export function)</li>
+                <li data-name=income_and_expense_with_period_toolbar>Bookkeeping (with period selection)</li>
+                <li data-name=income_and_expense_with_year_month_toolbar>Bookkeeping (with year and month selection)</li>
+                <li data-name=income_and_expense_with_year_quarter_toolbar>Bookkeeping (with year and quarter selection)</li>
+            </ul>
+            <br>
+            <span>Business intelligence processing</span>
+            <ul>
+                <li data-name=income_and_expense_bi>Processing</li>
+            </ul>
+            <br>
+            <span>Setup</span>
+            <ul>
+                <li data-name=predefined_transaction_item>Predefined transaction items</li>
+            </ul>
+            <br>
+        </div>
+    </div>
+</div>
+<script>
+//---------------------------------------------
+function F__ID(){
+	//---------------------------------------------
+	VmInclude:__LIB__/vmiis/Common-Code/navigation/navigation.js
+	VmInclude:__LIB__/vmiis/Common-Code/style/ease-in-out.js
+	//---------------------------------------------
+	var module_list=function(){
+		_app_id='bookkeeping_';
+		//---------------------------------------------
+		var L=$vm.module_list,A=_app_id;
+		var M='https://vmiis.github.io/modules/transaction_bookkeeping';
+		if(window.location.hostname=='127.0.0.1' || window.location.hostname=='localhost'){
+		        M=window.location.protocol+'//'+window.location.host+"/vmiis/modules/transaction_bookkeeping";
+		}
+		//---------------------------------------------
+		var v={
+			predefined_item_tid :'20005380',
+			record_tid          :'20007172',
+			bi_tid              :'20010377',
+			bi_details          :A+'income_and_expense_bi_details',
+		}
+		L[A+'income_and_expense_with_basic_toolbar']        ={table_id:v.record_tid,            var:v,  url:M+'/bookkeeping_with_basic_toolbar.html'};
+		L[A+'income_and_expense_with_period_toolbar']       ={table_id:v.record_tid,            var:v,  url:M+'/bookkeeping_with_period_toolbar.html'};
+		L[A+'income_and_expense_with_year_month_toolbar']   ={table_id:v.record_tid,            var:v,  url:M+'/bookkeeping_with_year_month_toolbar.html'};
+		L[A+'income_and_expense_with_year_quarter_toolbar'] ={table_id:v.record_tid,            var:v,  url:M+'/bookkeeping_with_year_quarter_toolbar.html'};
+		L[A+'predefined_transaction_item']                  ={table_id:v.predefined_item_tid,   var:v,  url:M+'/predefined_transaction_item.html'};
+		L[A+'income_and_expense_bi']                        ={table_id:v.bi_tid,                var:v,  url:M+'/income_and_expense_bookkeeping_bi.html'};
+		L[A+'income_and_expense_bi_details']                ={table_id:v.bi_tid,                var:v,  url:M+'/income_and_expense_bookkeeping_bi_details.html'};
+		//---------------------------------------------
+	}
+	module_list();
+	//---------------------------------------------
+	_set_li_permissions();
+	//---------------------------------------------
+	$('#D__ID').on('load',function(){
+		_nav_name='Transaction Bookkeeping';
+		_set_nav_link();
+	});
+	//---------------------------------------------
+}
+</script>
+<style>
+    VmInclude:__LIB__/vmiis/Common-Code/navigation/navigation.css
+    #D__ID{
+        overflow: hidden;
+        background: url("__LIB__/vmiis/common-code/image/texture.png");
+    }
+    .nav__ID span,.nav__ID u{
+        color:#005500;
+        font-weight: bold;
+    }
+    ul{
+        padding-left:28px;
+    }
+    @media screen and (max-width:900px){
+        #D__ID{
+            font-size:16pt;
+        }
+    }
+</style>

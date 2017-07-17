@@ -1,0 +1,50 @@
+{
+	"name":"Document Collaboration",
+	"url":"https://vmiis.github.io/modules/panels/panel.2.html",
+	"parameters":{
+	},
+	"panel":
+	{
+		"columns":
+		[
+			{
+				"sections":
+				[
+					{
+						"name" : "Collaboration Topics",
+						"modules" :
+						[
+							{
+							   "module_id" : "topics",
+							   "name" : "Topics",
+							   "table_id" : "20005052",
+							   "url" : "/modules/topic.html",
+							   "counting":"1"
+							}
+						]
+					},
+					{
+						"name" : "All files and comments",
+						"modules" :
+						[
+							{
+							   "module_id" : "files",
+							   "name" : "Files",
+							   "table_id" : "20005053",
+							   "url" : "/modules/file.html",
+							   "counting":"1"
+							},
+							{
+							   "module_id" : "comments",
+							   "name" : "Comments",
+							   "table_id" : "20005054",
+							   "url" : "/modules/comments.html",
+							   "counting":"1"
+							}
+						]
+					}
+				]
+			}
+		]
+	}
+}
